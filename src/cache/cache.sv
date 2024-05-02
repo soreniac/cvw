@@ -126,12 +126,12 @@ module cache import cvw::*; #(parameter cvw_t P,
 
   // Select victim way for associative caches
   if(NUMWAYS > 1) begin:vict
-    if(CACHESWITCH==0) begin: LFSR
-    cacheLRU #(NUMWAYS, SETLEN, OFFSETLEN, NUMLINES) cacheLRU(
+    if(CACHESWITCH==1) begin: LFSR
+    cacheLFSR #(NUMWAYS, SETLEN, OFFSETLEN, NUMLINES) cacheLFSR(
       .clk, .reset, .FlushStage, .CacheEn, .HitWay, .ValidWay, .VictimWay, .CacheSetData, .CacheSetTag, .LRUWriteEn,
       .SetValid, .ClearValid, .PAdr(PAdr[SETTOP-1:OFFSETLEN]), .InvalidateCache);
-    end else if(CACHESWITCH==1) begin: LRU
-        cacheLFSR #(NUMWAYS, SETLEN, OFFSETLEN, NUMLINES) cacheLFSR(
+    end else if(CACHESWITCH==0) begin: LRU
+        cacheLRU #(NUMWAYS, SETLEN, OFFSETLEN, NUMLINES) cacheLRU(
       .clk, .reset, .FlushStage, .CacheEn, .HitWay, .ValidWay, .VictimWay, .CacheSetData, .CacheSetTag, .LRUWriteEn,
       .SetValid, .ClearValid, .PAdr(PAdr[SETTOP-1:OFFSETLEN]), .InvalidateCache);
     end
